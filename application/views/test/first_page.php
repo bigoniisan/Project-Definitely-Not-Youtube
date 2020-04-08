@@ -1,6 +1,3 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,9 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="viewport"
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Upload</title>
+	<title>First Page</title>
 </head>
 <body>
-	<h1>Fucking work please</h1>
+	<h1>First Page</h1>
+
+	<?php $link_name = "Second Page Link"; ?>
+
+	<a href="second_page.php"><?php echo $link_name; ?></a>
 </body>
 </html>

@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 	<nav>
 		<a href="../controllers/Welcome.php">
-			<img src="../../img/homepage-icon.png" alt="Homepage">
+			<img src="../../images/homepage-icon.png" alt="Homepage">
 		</a>
 	</nav>
 

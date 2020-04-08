@@ -738,7 +738,7 @@ class CI_Jquery extends CI_Javascript {
 		}
 		else
 		{
-			$loading_notifier = '<img src="'.$this->CI->config->slash_item('base_url').$this->CI->config->item('javascript_ajax_img').'" alt="Loading" />';
+			$loading_notifier = '<images src="'.$this->CI->config->slash_item('base_url').$this->CI->config->item('javascript_ajax_img').'" alt="Loading" />';
 		}
 
 		$updater = '$('.$container.").empty();\n" // anything that was in... get it out

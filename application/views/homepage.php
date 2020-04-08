@@ -12,15 +12,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 	<nav>
-		<a href="../controllers/Welcome.php">
-			<img src="../../img/homepage-icon.png" alt="Homepage">
+		<a href="http://localhost/infs3202">
+			<img src="http://localhost/infs3202/images/homepage-icon.png" alt="Homepage">
 		</a>
 		<input type="search" id="search" name="search" placeholder="Search">
-		<a href="../controllers/Upload.php">
-			<img src="../../img/upload-icon.png" alt="Upload">
+		<a href="http://localhost/infs3202/index.php/Upload">
+			<img src="http://localhost/infs3202/images/upload-icon.png" alt="Upload">
 		</a>
-		<a href="../controllers/Login.php">
-			<img src="../../img/login-icon.png" alt="Login">
+		<a href="http://localhost/infs3202/index.php/Login">
+			<img src="http://localhost/infs3202/images/login-icon.png" alt="Login">
 		</a>
 	</nav>
 	<div id="video-area">

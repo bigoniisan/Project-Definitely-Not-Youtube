@@ -67,7 +67,7 @@ class CI_Typography {
 	 *
 	 * @var string
 	 */
-	public $inline_elements = 'a|abbr|acronym|b|bdo|big|br|button|cite|code|del|dfn|em|i|img|ins|input|label|map|kbd|q|samp|select|small|span|strong|sub|sup|textarea|tt|var';
+	public $inline_elements = 'a|abbr|acronym|b|bdo|big|br|button|cite|code|del|dfn|em|i|images|ins|input|label|map|kbd|q|samp|select|small|span|strong|sub|sup|textarea|tt|var';
 
 	/**
 	 * array of block level elements that require inner content to be within another block level element

@@ -168,7 +168,7 @@ if ( ! function_exists('img'))
 	/**
 	 * Image
 	 *
-	 * Generates an <img /> element
+	 * Generates an <images /> element
 	 *
 	 * @param	mixed
 	 * @param	bool
@@ -188,7 +188,7 @@ if ( ! function_exists('img'))
 			$src['alt'] = '';
 		}
 
-		$img = '<img';
+		$img = '<images';
 
 		foreach ($src as $k => $v)
 		{
