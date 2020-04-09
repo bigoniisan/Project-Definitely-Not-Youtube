@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 	<nav>
-		<a href="../controllers/Welcome.php">
+		<a href="http://localhost/infs3202">
 			<img src="../../images/homepage-icon.png" alt="Homepage">
 		</a>
 	</nav>
@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="password" name="password">
 		</div>
 		<br>
-		<a href="reset_password.php">Forgot Password?</a>
+		<a href="http://localhost/infs3202/ResetPassword">Forgot Password?</a>
 		<br>
 		<input type="submit" name="login-submit" value="Log In">
 	</form>
