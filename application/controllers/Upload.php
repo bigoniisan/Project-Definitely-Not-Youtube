@@ -5,6 +5,9 @@ class Upload extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('stylesheets/stylesheet');
+		$this->load->view('templates/header');
 		$this->load->view('upload');
+		$this->load->view('templates/footer');
 	}
 }

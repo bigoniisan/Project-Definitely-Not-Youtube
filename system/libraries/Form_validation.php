@@ -749,7 +749,7 @@ class CI_Form_validation {
 			elseif ( ! method_exists($this, $rule))
 			{
 				// If our own wrapper function doesn't exist we see if a native PHP function does.
-				// Users can use any native PHP function call that has one param.
+				// Login can use any native PHP function call that has one param.
 				if (function_exists($rule))
 				{
 					// Native PHP functions issue warnings if you pass them more parameters than they use

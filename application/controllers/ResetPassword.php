@@ -8,6 +8,7 @@ class ResetPassword extends CI_Controller {
 	{
 		$this->load->helper('form');
 
+		$this->load->view('stylesheets/stylesheet');
 		$this->load->view('templates/header');
 		$this->load->view('reset_password');
 		$this->load->view('templates/footer');
