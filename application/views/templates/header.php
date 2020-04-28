@@ -15,4 +15,7 @@
 	<a href="http://localhost/infs3202/Login">
 		<img src="http://localhost/infs3202/images/login-icon.png" alt="Login">
 	</a>
+<!--	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/login">-->
+<!--		<img src="http://localhost/infs3202/images/login-icon.png" alt="Login">-->
+<!--	</a>-->
 </nav>
