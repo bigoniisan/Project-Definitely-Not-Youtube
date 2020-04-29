@@ -4,14 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h1>Login Page</h1>
 <?php echo form_open('welcome/login_validation'); ?>
 <form>
-	<div id="username-login-area">
-		<label for="username">Username</label><br>
-		<input type="text" name="username">
-		<span class="text-danger"><?php echo form_error('username'); ?></span>
+	<div id="email-area">
+		<label for="email-username">Email</label><br>
+		<input type="text" name="email" maxlength="20" required>
+		<span class="text-danger"><?php echo form_error('email'); ?></span>
 	</div>
-	<div id="password-login-area">
+<!--	<div id="username-area">-->
+<!--		<label for="username">Username</label><br>-->
+<!--		<input type="text" name="username" minlength="4" maxlength="12" required>-->
+<!--		<span class="text-danger">--><?php //echo form_error('username'); ?><!--</span>-->
+<!--	</div>-->
+	<div id="password-area">
 		<label for="password">Password</label><br>
-		<input type="password" name="password">
+		<input type="password" name="password" minlength="4" maxlength="12" required>
 		<span class="text-danger"><?php echo form_error('password'); ?></span>
 	</div>
 	<br>

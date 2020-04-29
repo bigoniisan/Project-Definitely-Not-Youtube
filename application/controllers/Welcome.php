@@ -57,7 +57,7 @@ class Welcome extends CI_Controller {
 
 	public function load_page($view) {
 		$this->load->view('stylesheets/stylesheet');
-		if ($this->session->userdata('username') != '') {
+		if ($this->session->userdata('email') != '') {
 			$this->load->view('templates/navbar_logged_in');
 		} else {
 			$this->load->view('templates/navbar_logged_out');
@@ -68,74 +68,92 @@ class Welcome extends CI_Controller {
 
 	public function login_validation() {
 		$this->load->library('form_validation');
-		// set validation library rules, username + password not empty
-		$this->form_validation->set_rules('username', 'Username', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		if ($this->form_validation->run()) {
+//		// set validation library rules, username + password not empty
+		if ($this->form_validation->run('login')) {
 			// form rules validated
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
+			$form_submit = array(
+				'email' => $this->input->post('email'),
+				'password' => $this->input->post('password')
+			);
 			// model function
 			$this->load->model('main_model');
-			if ($this->main_model->can_login($username, $password)) {
-				// login info correct
-				$session_data = array(
-					'username' => $username
-				);
-				$this->session->set_userdata($session_data);
-				redirect(base_url() . 'welcome/enter');
-			} else {
-				// login info incorrect
-				$this->session->set_flashdata('error', 'Invalid username and password');
+
+			$user = $this->main_model->get_user($form_submit['email'], $form_submit['password']);
+			if ($user == false) {
+				// username or password not in database
+				$this->session->set_flashdata('error', 'Invalid username or password');
 				redirect(base_url() . 'welcome/login');
+			} else {
+				// username and password in database
+				foreach ($user as $value) {
+					$session_data = array(
+						'user_id' => $value['user_id'],
+						'email' => $value['email'],
+						'password' => $value['password'],
+						'first_name' => $value['first_name'],
+						'last_name' => $value['last_name'],
+						'birthday' => $value['birthday']
+					);
+				}
+				$this->session->set_userdata($session_data);
+				$this->load_page('homepage');
 			}
 		} else {
 			// form rules not validated
-			$this->login();
-		}
-	}
-
-	// after login redirect to this page
-	public function enter() {
-		if ($this->session->userdata('username') != '') {
-			// session variable is same as current user
-			echo '<h2>Welcome - '.$this->session->userdata('username').'</h2>';
-			$this->load_page('homepage');
-		} else {
-			// session variable is not same as current user
-			redirect(base_url() . 'welcome/login');
+			$this->session->set_flashdata('error', 'Error with login');
+			redirect(base_url(). 'welcome/login');
 		}
 	}
 
 	public function logout() {
-		$this->session->unset_userdata('username');
+		$this->session->unset_userdata('email');
 		redirect(base_url() . 'welcome/login');
 	}
 
 	public function signup_validation() {
 		$this->load->library('form_validation');
-		// set validation library rules, username + password not empty
-		$this->form_validation->set_rules('username', 'Username', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		if ($this->form_validation->run()) {
+//		 set validation library rules in \config\form_validation.php
+		if ($this->form_validation->run('signup')) {
 			// form rules validated
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
+			$data = array(
+				'user_id' => $this->main_model->get_users_length() + 1,
+				'email' => $this->input->post('email'),
+				'password' => $this->input->post('password'),
+				'first_name' => $this->input->post('first-name'),
+				'last_name' => $this->input->post('last-name'),
+				'birthday' => $this->input->post('birthday')
+			);
 			// model function
 			$this->load->model('main_model');
-			if ($this->main_model->user_exists($username) == true) {
-				// user exists
-				$this->session->set_flashdata('error', 'Username already taken');
-				redirect(base_url() . 'welcome/login');
+			if ($this->main_model->user_exists($data['email'])) {
+				// email exists
+				$this->session->set_flashdata('error', 'Email already taken');
+				redirect(base_url() . 'welcome/signup');
 			} else {
 				// user does not exist
-				$this->main_model->insert_user($username, $password);
+				$this->main_model->insert_user(
+					$data['user_id'],
+					$data['email'],
+					$data['password'],
+					$data['first_name'],
+					$data['last_name'],
+					$data['birthday']
+				);
 				$session_data = array(
-					'username' => $username
+					'user_id' => $data['user_id'],
+					'email' => $data['email'],
+					'first_name' => $data['first_name'],
+					'last_name' => $data['last_name'],
+					'birthday' => $data['birthday']
 				);
 				$this->session->set_userdata($session_data);
-				redirect(base_url() . 'welcome/enter');
+				$this->load_page('homepage');
 			}
+		} else {
+			// form rules not validated
+			$this->session->set_flashdata('error', 'First Name and Last Name should only consist of 
+				alphabetic characters');
+			redirect(base_url(). 'welcome/signup');
 		}
 	}
 }

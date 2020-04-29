@@ -4,21 +4,22 @@ class main_model extends CI_Model {
 
 	public function fetch_single_data($id) {
 		$this->db->where('id', $id);
-		$query = $this->db->get('user');
+		$query = $this->db->get('users');
 		return $query;
 		// SELECT * FROM user where id = '$id'
 	}
 
 	public function update_data($data, $id) {
 		$this->db->where('id', $id);
-		$this->db-update('user', $data);
+		$this->db-update('users', $data);
 		// UPDATE user SET first_name = '$first_name', last_name = '$last_name' WHERE id = '$id'
 	}
 
-	public function can_login($username, $password) {
-		$this->db->where('username', $username);
+	public function can_login($login, $password) {
+		$this->db->where('email', $login);
 		$this->db->where('password', $password);
-		$query = $this->db->get('user');
+//		$result = $this->db->query("SELECT * FROM users WHERE email = '$login' AND password = '$password'");
+		$query = $this->db->get('users');
 		// SELECT * FROM user WHERE username = '$username' AND password = '$password'
 
 		if ($query->num_rows() > 0) {
@@ -30,9 +31,10 @@ class main_model extends CI_Model {
 		}
 	}
 
-	public function user_exists($username) {
-		$this->db->where('username', $username);
-		$query = $this->db->get('user');
+	public function user_exists($login) {
+		$this->db->where('email', $login);
+		$query = $this->db->get('users');
+//		$result = $this->db->query("SELECT * FROM users WHERE email = '$login'");
 		if ($query->num_rows() > 0) {
 			// user exists
 			return true;
@@ -42,11 +44,39 @@ class main_model extends CI_Model {
 		}
 	}
 
-	public function insert_user($username, $password) {
+	public function insert_user(
+		$user_id,
+		$email,
+		$password,
+		$first_name,
+		$last_name,
+		$birthday
+	) {
 		$data = array(
-			'username' => $username,
-			'password' => $password
+			'user_id' => $user_id,
+			'email' => $email,
+			'password' => $password,
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'birthday' => $birthday
 		);
-		$this->db->insert('user', $data);
+		$this->db->insert('users', $data);
+	}
+
+	public function get_users_length() {
+		$query = $this->db->get('users');
+		return $query->num_rows();
+	}
+
+	public function get_user($login, $password) {
+		$this->db->where('email', $login);
+		$this->db->where('password', $password);
+		$query = $this->db->get('users');
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			// return false if user does not exist
+			return false;
+		}
 	}
 }
