@@ -9,6 +9,9 @@
 	<a href="http://localhost/infs3202/welcome/upload">
 		<img src="http://localhost/infs3202/images/upload-icon.png" alt="Upload">
 	</a>
+	<a href="http://localhost/infs3202/welcome/image_upload">
+		<img src="http://localhost/infs3202/images/image-upload-icon.png" alt="Image Upload">
+	</a>
 	<a href="http://localhost/infs3202/welcome/my_account">
 		<img src="http://localhost/infs3202/images/my_account-icon.png" alt="My Account">
 	</a>

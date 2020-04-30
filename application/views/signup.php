@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div id="email-area">
 		<label for="email">Email</label><br>
 		<input type="email" name="email" required>
+		<?php echo $error; ?>
 		<span class="text-danger"><?php echo form_error('email'); ?></span>
 	</div>
 <!--	<div id="username-area">-->
@@ -17,11 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div id="password-area">
 		<label for="password">Password</label><br>
 		<input type="password" name="password" minlength="4" maxlength="12" required>
+		<?php echo $error; ?>
 		<span class="text-danger"><?php echo form_error('password'); ?></span>
 	</div>
 	<div id="name-area">
 		<label for="name">First Name</label><br>
 		<input type="text" name="name" maxlength="20" required>
+		<?php echo $error; ?>
 		<span class="text-danger"><?php echo form_error('name'); ?></span>
 	</div>
 <!--	<div id="last-name-area">-->
@@ -32,6 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div id="birthday-area">
 		<label for="birthday">Birthday</label><br>
 		<input type="date" name="birthday">
+		<?php echo $error; ?>
 		<span class="text-danger"><?php echo form_error('birthday'); ?></span>
 	</div>
 <!--	<div id="gender-area">-->
@@ -48,8 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	</div>-->
 	<div class="form-group">
 		<input type="submit" name="signup-submit" value="Sign Up">
-		<?php
-		echo $this->session->flashdata("error");
-		?>
+		<?php echo $error; ?>
+		<?php echo $this->session->flashdata("error"); ?>
 	</div>
 </form>
