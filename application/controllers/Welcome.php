@@ -90,8 +90,8 @@ class Welcome extends CI_Controller {
 						'user_id' => $value['user_id'],
 						'email' => $value['email'],
 						'password' => $value['password'],
-						'first_name' => $value['first_name'],
-						'last_name' => $value['last_name'],
+						'name' => $value['name'],
+//						'last_name' => $value['last_name'],
 						'birthday' => $value['birthday']
 					);
 				}
@@ -119,8 +119,8 @@ class Welcome extends CI_Controller {
 				'user_id' => $this->main_model->get_users_length() + 1,
 				'email' => $this->input->post('email'),
 				'password' => $this->input->post('password'),
-				'first_name' => $this->input->post('first-name'),
-				'last_name' => $this->input->post('last-name'),
+				'name' => $this->input->post('name'),
+//				'last_name' => $this->input->post('last-name'),
 				'birthday' => $this->input->post('birthday')
 			);
 			// model function
@@ -135,15 +135,15 @@ class Welcome extends CI_Controller {
 					$data['user_id'],
 					$data['email'],
 					$data['password'],
-					$data['first_name'],
-					$data['last_name'],
+					$data['name'],
+//					$data['last_name'],
 					$data['birthday']
 				);
 				$session_data = array(
 					'user_id' => $data['user_id'],
 					'email' => $data['email'],
-					'first_name' => $data['first_name'],
-					'last_name' => $data['last_name'],
+					'name' => $data['name'],
+//					'last_name' => $data['last_name'],
 					'birthday' => $data['birthday']
 				);
 				$this->session->set_userdata($session_data);
@@ -151,9 +151,27 @@ class Welcome extends CI_Controller {
 			}
 		} else {
 			// form rules not validated
-			$this->session->set_flashdata('error', 'First Name and Last Name should only consist of 
-				alphabetic characters');
-			redirect(base_url(). 'welcome/signup');
+			$this->session->set_flashdata('error', 'Name should only consist of alphabetic characters');
+			redirect(base_url() . 'welcome/signup');
+		}
+	}
+
+	public function change_name() {
+		$this->load->model('main_model');
+		$user_id = $this->session->userdata('user_id');
+		$change_name = $this->input->post('change-name');
+		if (preg_match('~[0-9]~', $change_name)) {
+			// why doesn't this work?
+			$this->session->set_flashdata('error', 'Name should only consist of alphabetic characters');
+			redirect(base_url() . 'welcome/my_account');
+		} else {
+			$data = array(
+				'name' => $change_name
+			);
+			$this->main_model->update_user($user_id, $data);
+			$session_data['name'] = $change_name;
+			$this->session->set_userdata($session_data);
+			redirect(base_url() . 'welcome/my_account');
 		}
 	}
 }

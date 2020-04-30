@@ -9,10 +9,9 @@ class main_model extends CI_Model {
 		// SELECT * FROM user where id = '$id'
 	}
 
-	public function update_data($data, $id) {
-		$this->db->where('id', $id);
-		$this->db-update('users', $data);
-		// UPDATE user SET first_name = '$first_name', last_name = '$last_name' WHERE id = '$id'
+	public function update_user($user_id, $data) {
+		$this->db->where('user_id', $user_id);
+		$this->db->update('users', $data);
 	}
 
 	public function can_login($login, $password) {
@@ -48,16 +47,16 @@ class main_model extends CI_Model {
 		$user_id,
 		$email,
 		$password,
-		$first_name,
-		$last_name,
+		$name,
+//		$last_name,
 		$birthday
 	) {
 		$data = array(
 			'user_id' => $user_id,
 			'email' => $email,
 			'password' => $password,
-			'first_name' => $first_name,
-			'last_name' => $last_name,
+			'name' => $name,
+//			'last_name' => $last_name,
 			'birthday' => $birthday
 		);
 		$this->db->insert('users', $data);

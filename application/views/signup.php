@@ -19,16 +19,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="password" name="password" minlength="4" maxlength="12" required>
 		<span class="text-danger"><?php echo form_error('password'); ?></span>
 	</div>
-	<div id="first-name-area">
-		<label for="first-name">First Name</label><br>
-		<input type="text" name="first-name" maxlength="20" required>
-		<span class="text-danger"><?php echo form_error('first-name'); ?></span>
+	<div id="name-area">
+		<label for="name">First Name</label><br>
+		<input type="text" name="name" maxlength="20" required>
+		<span class="text-danger"><?php echo form_error('name'); ?></span>
 	</div>
-	<div id="last-name-area">
-		<label for="last-name">Last Name</label><br>
-		<input type="text" name="last-name" maxlength="20" required>
-		<span class="text-danger"><?php echo form_error('last-name'); ?></span>
-	</div>
+<!--	<div id="last-name-area">-->
+<!--		<label for="last-name">Last Name</label><br>-->
+<!--		<input type="text" name="last-name" maxlength="20" required>-->
+<!--		<span class="text-danger">--><?php //echo form_error('last-name'); ?><!--</span>-->
+<!--	</div>-->
 	<div id="birthday-area">
 		<label for="birthday">Birthday</label><br>
 		<input type="date" name="birthday">
