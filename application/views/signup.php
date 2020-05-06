@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <h1>Signup Page</h1>
 <?php echo form_open('welcome/signup_validation'); ?>
+<!--<form id="signup-form" action="--><?php //echo site_url('welcome/signup_validation'); ?><!--" method="POST">-->
 <form>
 	<div id="email-area">
 		<label for="email">Email</label><br>
@@ -22,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<span class="text-danger"><?php echo form_error('password'); ?></span>
 	</div>
 	<div id="name-area">
-		<label for="name">First Name</label><br>
+		<label for="name">Name</label><br>
 		<input type="text" name="name" maxlength="20" required>
 		<?php echo $error; ?>
 		<span class="text-danger"><?php echo form_error('name'); ?></span>

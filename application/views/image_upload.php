@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<input type="file" name="userfile" />
 	<input type="submit" name="submit" value="Upload Image"/>
 	<?php echo $this->session->set_flashdata("error"); ?>
-	<?php echo $error; ?>
+<!--	--><?php //echo $error; ?>
 </form>
 <div id="container">
 	<img src="<?php echo $image?>">

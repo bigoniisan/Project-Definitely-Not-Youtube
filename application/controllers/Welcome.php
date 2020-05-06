@@ -3,29 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('main_model');
-		$this->load->helper('form');
-		$this->load->library('session');
-		$this->load->helper('cookie');
+		$this->load->helper(array(
+			'form',
+			'cookie'
+		));
+		$this->load->library(array(
+			'email',
+			'session',
+			'image_lib'
+		));
 	}
 
 	public function index() {
@@ -121,6 +112,34 @@ class Welcome extends CI_Controller {
 //		$this->load->view($view, $error);
 //	}
 
+//public function send_email() {
+//		$config = array(
+//			'protocol' => 'smtp',
+//			'smtp_host' => 'ssl://smtp.googlemail.com',
+//			'smpt_port' => '25',
+//			'smtp_user' => 'name@gmail.com',
+//			'smtp_pass' => 'password',
+//			'maintype' => 'html',
+//			'starttls' => true,
+//			'newline' => "\r\n"
+//		);
+//		$this->load->library('email', $config);
+//
+//		$this->email->from('misterimouto@gmail.com', 'MisterImouto');
+//		$this->email->to('johngod3@gmail.com');
+//		$this->email->subject('Web Information Systems Email Test');
+//		$this->email->message('Testing CodeIgniter Email functionality');
+//		$this->email->send();
+//}
+
+	public function show_calendar() {
+		$calendar_prefs = array(
+			'show_next_prev' => TRUE,
+			'next_prev_url' => 'http://localhost/infs3202/welcome/show_calendar'
+		);
+		$this->load->library('calendar', $calendar_prefs);
+	}
+
 	// skip login in cookies exist
 	public function user_login() {
 		// if cookies exist
@@ -166,6 +185,7 @@ class Welcome extends CI_Controller {
 
 				// get details from user in db and store as session data
 				foreach ($user as $value) {
+					print_r($value);
 					$session_data = array(
 						'user_id' => $value['user_id'],
 						'email' => $value['email'],
@@ -265,7 +285,7 @@ class Welcome extends CI_Controller {
 
 	public function upload_image() {
 		// set destination for uploads
-		$config['upload_path'] = './images/uploaded_images';
+		$config['upload_path'] = './uploads';
 		// set allowed filetypes to be uploaded
 		$config['allowed_types'] = 'jpg|jpeg|gif|png';
 
@@ -277,13 +297,38 @@ class Welcome extends CI_Controller {
 			$this->load_header();
 			$this->load->view('image_upload', $error);
 		} else {
-			$file_data = $this->upload->data();
-			$data = array(
+			$image_data = $this->upload->data();
+			$img = array(
 				'error' => '',
-				'image' => base_url().'/images/uploaded_images/'.$file_data['file_name']
+				'image' => base_url().'/uploads/'.$image_data['file_name']
 			);
+
+//			switch ($this->input->post('mode')) {
+//				case "crop":
+//					$data = $this->image_lib->crop($image_data);
+//					$this->load->view('image_upload', $data);
+//					break;
+//				case "resize":
+//					$data = $this->image_lib->resize($image_data);
+//					$this->load->view('image_upload', $data);
+//					break;
+//				case "rotate":
+//					$data = $this->image_lib->rotate($image_data);
+//					$this->load->view('image_upload', $data);
+//					break;
+//				case "watermark":
+//					$data = $this->image_lib->water_marking($image_data);
+//					$this->load->view('image_upload', $data);
+//					break;
+//				default:
+//					echo $this->image_lib->display_errors();
+//					$this->load_header();
+//					$this->load->view('image_upload', $img);
+//					break;
+//			}
+
 			$this->load_header();
-			$this->load->view('image_upload', $data);
+			$this->load->view('image_upload', $img);
 
 //			redirect(base_url() . 'welcome/image_upload');
 		}
