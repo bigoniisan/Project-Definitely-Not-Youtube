@@ -44,6 +44,9 @@
 	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/welcome/image_upload">
 		Image Upload
 	</a>
+<!--	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/welcome/upload_image_server">-->
+<!--		Image Upload with Ajax-->
+<!--	</a>-->
 	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/welcome/my_account">
 		My Account
 	</a>

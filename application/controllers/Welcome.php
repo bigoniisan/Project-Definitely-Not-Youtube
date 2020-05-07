@@ -153,7 +153,11 @@ class Welcome extends CI_Controller {
 	public function login_validation() {
 		$this->load->library('form_validation');
 //		// set validation library rules, username + password not empty
-		if ($this->form_validation->run('login')) {
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'max_length[20]');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'min_length[4]');
+		if ($this->form_validation->run()) {
 
 			// form rules validated
 			$data = array(
@@ -217,7 +221,15 @@ class Welcome extends CI_Controller {
 	public function signup_validation() {
 		$this->load->library('form_validation');
 //		 set validation library rules in \config\form_validation.php
-		if (true) {
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'max_length[20]');
+		$this->form_validation->set_rules('email', 'Email', 'is_unique[users.email]');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'min_length[4]');
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'alpha');
+		$this->form_validation->set_rules('birthday', 'Birthday', 'required');
+		if ($this->form_validation->run()) {
 			// form rules validated
 			$data = array(
 				'user_id' => $this->main_model->get_users_length() + 1,
@@ -259,7 +271,9 @@ class Welcome extends CI_Controller {
 			}
 		} else {
 			// form rules not validated
-			$this->session->set_flashdata('error', 'Error with form input');
+//			$this->session->set_flashdata('error', 'Error with form input');
+//			echo $this->form_validation->display_errors();
+//			echo validation_errors();
 			redirect(base_url() . 'welcome/signup');
 		}
 	}
@@ -309,23 +323,30 @@ class Welcome extends CI_Controller {
 
 	}
 
-	public function upload_image_server() {
-		$data['title'] = "Upload image using Ajax JQuery";
-		$this->load->view('upload_image_server', $data);
-	}
+//	public function upload_image_server() {
+//		$data['title'] = "Upload image using Ajax JQuery";
+//		$this->load_header();
+//		$this->load->view('upload_image_server', $data);
+//	}
 
-	public function ajax_upload() {
-		if (isset($_FILES["image_file"]["name"])) {
-			$config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'jpg|jpeg|png|gif';
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('image_file')) {
-				echo $this->upload->display_errors();
-			} else {
-				$data = $this->upload->data();
-				echo '<img src="'.base_url().'upload/'.$data["file_name"].'" />';
-			}
-		}
+//	public function ajax_upload() {
+//		if (isset($_FILES["image_file"]["name"])) {
+//			$config['upload_path'] = './uploads/';
+//			$config['allowed_types'] = 'jpg|jpeg|png|gif';
+//			$this->load->library('upload', $config);
+//			if (!$this->upload->do_upload('image_file')) {
+//				$error = array(
+//					'error' => $this->upload->display_errors(),
+//					'image' => '',
+//					'title' => ''
+//				);
+//				$this->load_header();
+//				$this->load->view('upload_image_server', $error);
+//			} else {
+//				$data = $this->upload->data();
+//				echo '<img src="'.base_url().'/uploads/'.$data["file_name"].'" />';
+//			}
+//		}
 
-	}
+//	}
 }

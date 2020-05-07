@@ -11,6 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id="container">
 	<img src="<?php echo $image?>">
 </div>
-<div>
-	<a href="upload_image_server">Upload image to server</a>
-</div>
+<!--<div>-->
+<!--	<a href="upload_image_server">Upload image to server</a>-->
+<!--</div>-->
