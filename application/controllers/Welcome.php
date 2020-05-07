@@ -217,7 +217,7 @@ class Welcome extends CI_Controller {
 	public function signup_validation() {
 		$this->load->library('form_validation');
 //		 set validation library rules in \config\form_validation.php
-		if ($this->form_validation->run('signup')) {
+		if (true) {
 			// form rules validated
 			$data = array(
 				'user_id' => $this->main_model->get_users_length() + 1,
@@ -259,7 +259,7 @@ class Welcome extends CI_Controller {
 			}
 		} else {
 			// form rules not validated
-			$this->session->set_flashdata('error', 'Name should only consist of alphabetic characters');
+			$this->session->set_flashdata('error', 'Error with form input');
 			redirect(base_url() . 'welcome/signup');
 		}
 	}
@@ -288,49 +288,43 @@ class Welcome extends CI_Controller {
 		$config['upload_path'] = './uploads';
 		// set allowed filetypes to be uploaded
 		$config['allowed_types'] = 'jpg|jpeg|gif|png';
-
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload()) {
 			$error = array(
-				'error' => $this->upload->display_errors()
+				'error' => $this->upload->display_errors(),
+				'image' => ''
 			);
 			$this->load_header();
 			$this->load->view('image_upload', $error);
 		} else {
-			$image_data = $this->upload->data();
-			$img = array(
+			// returns array containing all data related to uploaded file
+			$upload_data = $this->upload->data();
+			$data = array(
 				'error' => '',
-				'image' => base_url().'/uploads/'.$image_data['file_name']
+				'image' => base_url().'/uploads/'.$upload_data['file_name']
 			);
-
-//			switch ($this->input->post('mode')) {
-//				case "crop":
-//					$data = $this->image_lib->crop($image_data);
-//					$this->load->view('image_upload', $data);
-//					break;
-//				case "resize":
-//					$data = $this->image_lib->resize($image_data);
-//					$this->load->view('image_upload', $data);
-//					break;
-//				case "rotate":
-//					$data = $this->image_lib->rotate($image_data);
-//					$this->load->view('image_upload', $data);
-//					break;
-//				case "watermark":
-//					$data = $this->image_lib->water_marking($image_data);
-//					$this->load->view('image_upload', $data);
-//					break;
-//				default:
-//					echo $this->image_lib->display_errors();
-//					$this->load_header();
-//					$this->load->view('image_upload', $img);
-//					break;
-//			}
-
 			$this->load_header();
-			$this->load->view('image_upload', $img);
+			$this->load->view('image_upload', $data);
+		}
 
-//			redirect(base_url() . 'welcome/image_upload');
+	}
+
+	public function upload_image_server() {
+		$data['title'] = "Upload image using Ajax JQuery";
+		$this->load->view('upload_image_server', $data);
+	}
+
+	public function ajax_upload() {
+		if (isset($_FILES["image_file"]["name"])) {
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'jpg|jpeg|png|gif';
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('image_file')) {
+				echo $this->upload->display_errors();
+			} else {
+				$data = $this->upload->data();
+				echo '<img src="'.base_url().'upload/'.$data["file_name"].'" />';
+			}
 		}
 
 	}

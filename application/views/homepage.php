@@ -17,24 +17,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </form>
 
 <script type="text/javascript">
-
-	// function loadXHR() {
-	// 	const xhr = new XMLHttpRequest();
-	// 	xhr.onreadystatechange = function() {
-	// 		if (xhr.readyState == 4) {
-	// 			if (xhr.status == 200) {
-	// 				document.getElementById('myDiv').innerHTML = xhr.responseText;
-	// 			}
-	// 			if (xhr.status = 404) {
-	// 				console.log('error');
-	// 			}
-	// 		}
-	// 	}
-	//
-	// 	xhr.open('get', 'license.txt', true);
-	// 	xhr.send();
-	// }
-
 	function loadXMLDoc() {
 		var xhr;
 		// check if browser supports XMLHttpRequest object

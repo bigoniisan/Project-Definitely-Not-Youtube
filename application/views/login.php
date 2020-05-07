@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <h1>Login Page</h1>
-<?php echo form_open('welcome/user_login'); ?>
+<?php echo form_open('https://infs3202-78c24710.uqcloud.net/infs3202/welcome/user_login'); ?>
 <form>
 	<div id="email-area">
 		<label for="email-username">Email</label><br>

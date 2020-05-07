@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <h1>Signup Page</h1>
-<?php echo form_open('welcome/signup_validation'); ?>
+<?php echo form_open('https://infs3202-78c24710.uqcloud.net/infs3202/welcome/signup_validation'); ?>
 <!--<form id="signup-form" action="--><?php //echo site_url('welcome/signup_validation'); ?><!--" method="POST">-->
 <form>
 	<div id="email-area">

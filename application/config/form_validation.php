@@ -18,15 +18,15 @@ $config = array(
 			'rules' => 'required|min_length[4]|max_length[12]'
 		),
 		array(
-			'field' => 'first-name',
-			'label' => 'First Name',
+			'field' => 'name',
+			'label' => 'Name',
 			'rules' => 'required|max_length[20]|alpha'
 		),
-		array(
-			'field' => 'last-name',
-			'label' => 'Last Name',
-			'rules' => 'required|max_length[20]|alpha'
-		)
+//		array(
+//			'field' => 'last-name',
+//			'label' => 'Last Name',
+//			'rules' => 'required|max_length[20]|alpha'
+//		)
 	),
 	'login' => array(
 		array(
