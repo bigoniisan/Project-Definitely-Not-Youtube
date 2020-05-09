@@ -23,7 +23,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('homepage', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -31,7 +31,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('login', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -39,7 +39,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('signup', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -47,7 +47,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('upload', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -55,7 +55,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('reset_password', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -63,7 +63,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('my_account', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -71,7 +71,7 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('image_upload', array(
 			'error' => '',
-			'image' => ''
+			'file' => ''
 		));
 	}
 
@@ -278,12 +278,75 @@ class Welcome extends CI_Controller {
 		}
 	}
 
+	public function upload_image() {
+		// set destination for uploads
+		$config['upload_path'] = './uploads';
+		// set allowed filetypes to be uploaded
+		$config['allowed_types'] = 'jpg|jpeg|gif|png';
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload()) {
+			$error = array(
+				'error' => $this->upload->display_errors(),
+				'file' => ''
+			);
+			$this->load_header();
+			$this->load->view('image_upload', $error);
+		} else {
+			// returns array containing all data related to uploaded file
+			$upload_data = $this->upload->data();
+			$data = array(
+				'error' => '',
+				'file' => base_url().'/uploads/'.$upload_data['file_name']
+			);
+			$this->load_header();
+			$this->load->view('image_upload', $data);
+		}
+	}
+
+	public function upload_video() {
+		// set destination for uploads
+		$config['upload_path'] = './uploads';
+		// set allowed filetypes to be uploaded
+		$config['allowed_types'] = 'mp4';
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload()) {
+			$data = array(
+				'error' => $this->upload->display_errors(),
+				'file' => ''
+			);
+			$this->load_header();
+			$this->load->view('upload', $data);
+		} else {
+			// returns array containing all data related to uploaded file
+			$upload_data = $this->upload->data();
+			$data = array(
+				'error' => '',
+				'file' => base_url().'/uploads/'.$upload_data['file_name']
+			);
+			$this->load_header();
+			$this->load->view('upload', $data);
+		}
+	}
+
+	public function change_email() {
+		$this->load->model('main_model');
+		$user_id = $this->session->userdata('user_id');
+		$change_email = $this->input->post('change-email');
+		$data = array(
+			'email' => $change_email
+		);
+		$this->main_model->update_user($user_id, $data);
+		$session_data['email'] = $change_email;
+		$this->session->set_userdata($session_data);
+		redirect(base_url() . 'welcome/my_account');
+	}
+
 	public function change_name() {
 		$this->load->model('main_model');
 		$user_id = $this->session->userdata('user_id');
 		$change_name = $this->input->post('change-name');
 		if (preg_match('~[0-9]~', $change_name)) {
-			// why doesn't this work?
+//			// why doesn't this work?
 			$this->session->set_flashdata('error', 'Name should only consist of alphabetic characters');
 			redirect(base_url() . 'welcome/my_account');
 		} else {
@@ -297,56 +360,57 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	public function upload_image() {
-		// set destination for uploads
-		$config['upload_path'] = './uploads';
-		// set allowed filetypes to be uploaded
-		$config['allowed_types'] = 'jpg|jpeg|gif|png';
-		$this->load->library('upload', $config);
-		if (!$this->upload->do_upload()) {
-			$error = array(
-				'error' => $this->upload->display_errors(),
-				'image' => ''
-			);
-			$this->load_header();
-			$this->load->view('image_upload', $error);
+	public function change_birthday() {
+		$this->load->model('main_model');
+		$user_id = $this->session->userdata('user_id');
+		$change_birthday = $this->input->post('change-birthday');
+		if ($change_birthday > date('Y-m-d')) {
+//			// why doesn't this work?
+			$this->session->set_flashdata('error', 'Date cannot be after today');
+			redirect(base_url() . 'welcome/my_account');
 		} else {
-			// returns array containing all data related to uploaded file
-			$upload_data = $this->upload->data();
 			$data = array(
-				'error' => '',
-				'image' => base_url().'/uploads/'.$upload_data['file_name']
+				'birthday' => $change_birthday
 			);
-			$this->load_header();
-			$this->load->view('image_upload', $data);
+			$this->main_model->update_user($user_id, $data);
+			$session_data['birthday'] = $change_birthday;
+			$this->session->set_userdata($session_data);
+			redirect(base_url() . 'welcome/my_account');
 		}
-
 	}
 
-//	public function upload_image_server() {
-//		$data['title'] = "Upload image using Ajax JQuery";
-//		$this->load_header();
-//		$this->load->view('upload_image_server', $data);
-//	}
-
-//	public function ajax_upload() {
-//		if (isset($_FILES["image_file"]["name"])) {
-//			$config['upload_path'] = './uploads/';
-//			$config['allowed_types'] = 'jpg|jpeg|png|gif';
-//			$this->load->library('upload', $config);
-//			if (!$this->upload->do_upload('image_file')) {
-//				$error = array(
-//					'error' => $this->upload->display_errors(),
-//					'image' => '',
-//					'title' => ''
-//				);
-//				$this->load_header();
-//				$this->load->view('upload_image_server', $error);
-//			} else {
-//				$data = $this->upload->data();
-//				echo '<img src="'.base_url().'/uploads/'.$data["file_name"].'" />';
+//	public function upload_multiple_videos() {
+//
+//		$data = [];
+//
+//		$count = count($_FILES['files']['name']);
+//
+//		for($i=0; $i < $count; $i++) {
+//
+//			if(!empty($_FILES['files']['name'][$i])) {
+//
+//				$_FILES['file']['name'] = $_FILES['files']['name'][$i];
+//				$_FILES['file']['type'] = $_FILES['files']['type'][$i];
+//				$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+//				$_FILES['file']['error'] = $_FILES['files']['error'][$i];
+//				$_FILES['file']['size'] = $_FILES['files']['size'][$i];
+//
+//				$config['upload_path'] = 'uploads/';
+//				$config['allowed_types'] = 'jpg|jpeg|png|gif';
+//				$config['max_size'] = '5000';
+//				$config['file_name'] = $_FILES['files']['name'][$i];
+//
+//				$this->load->library('upload',$config);
+//
+//				if($this->upload->do_upload('file')){
+//					$uploadData = $this->upload->data();
+//					$filename = $uploadData['file_name'];
+//
+//					$data['totalFiles'][] = $filename;
+//				}
 //			}
+//
 //		}
-
+//		$this->load->view('upload', $data);
 //	}
 }
