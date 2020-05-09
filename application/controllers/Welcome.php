@@ -20,11 +20,7 @@ class Welcome extends CI_Controller {
 	}
 
 	public function index() {
-		$this->load_header();
-		$this->load->view('homepage', array(
-			'error' => '',
-			'file' => ''
-		));
+		$this->homepage();
 	}
 
 	public function login() {
@@ -77,7 +73,12 @@ class Welcome extends CI_Controller {
 
 	public function homepage() {
 		$this->load_header();
-		$this->load->view('homepage');
+		$this->load->view('homepage', array(
+			'error' => '',
+			'file' => '',
+			'map' => ''
+		));
+
 	}
 
 	public function load_header() {
@@ -88,29 +89,6 @@ class Welcome extends CI_Controller {
 			$this->load->view('templates/navbar_logged_out');
 		}
 	}
-
-//	public function load_page($view) {
-//		$this->load->view('stylesheets/stylesheet');
-//		if ($this->session->userdata('email') != '') {
-//			$this->load->view('templates/navbar_logged_in');
-//		} else {
-//			$this->load->view('templates/navbar_logged_out');
-//		}
-//		$this->load->view($view, array(
-//			'error' => '',
-//			'image' => ''
-//		));
-//	}
-
-//	public function load_page_error($view, $error) {
-//		$this->load->view('stylesheets/stylesheet');
-//		if ($this->session->userdata('email') != '') {
-//			$this->load->view('templates/navbar_logged_in');
-//		} else {
-//			$this->load->view('templates/navbar_logged_out');
-//		}
-//		$this->load->view($view, $error);
-//	}
 
 //public function send_email() {
 //		$config = array(

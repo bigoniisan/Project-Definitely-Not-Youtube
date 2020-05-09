@@ -83,4 +83,9 @@ class main_model extends CI_Model {
 			return false;
 		}
 	}
+
+//	public function get_file() {
+//		$this->db->select('file_id');
+//		$this->db->where('');
+//	}
 }

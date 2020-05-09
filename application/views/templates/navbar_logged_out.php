@@ -2,7 +2,7 @@
 <head>
 <body>
 <nav>
-	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/">
+	<a href="https://infs3202-78c24710.uqcloud.net/infs3202/welcome/homepage">
 		Homepage
 	</a>
 	<input type="search" id="search" name="search" placeholder="Search">
