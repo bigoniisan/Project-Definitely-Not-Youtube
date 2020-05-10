@@ -32,3 +32,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<span class="text-danger"><?php echo form_error('change-birthday'); ?></span>
 	<?php echo $this->session->set_flashdata("error"); ?>
 </form>
+
+<?php
+echo $this->session->flashdata('email_sent');
+echo form_open('welcome/send_email');
+?>
+<input type="email" name="send-email">
+<input type="submit" value="Send email for some reason">
+<?php echo $this->session->set_flashdata("error"); ?>
+<?php //echo form_close();?>
+<a href="https://infs3202-78c24710.uqcloud.net/infs3202/welcome/send_email">send email for some reason</a>

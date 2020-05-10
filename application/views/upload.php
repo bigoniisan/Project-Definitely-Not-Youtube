@@ -27,9 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <br/><br/>
 
 <!--<div id="multiple-video-upload">-->
-<!--	--><?php //echo form_open_multipart('welcome/upload_video'); ?>
+<!--	--><?php //echo form_open_multipart('welcome/upload_multiple_videos'); ?>
 <!--	<form class="dropzone" id="fileupload">-->
-<!--		<input type='file' id="userfiles" name='files[]' accept="video/mp4" multiple="">-->
+<!--		<input type='file' id="multi-file" name='multi-file' accept="video/mp4" multiple="">-->
 <!--		<input type='submit' name='submit' value='Upload multiple MP4s' />-->
 <!--		--><?php //echo $this->session->set_flashdata("error"); ?>
 <!--		--><?php //echo $error; ?>
@@ -40,6 +40,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<video width="320" height="180" controls>
 		<source src="<?php echo $file; ?>" type="video/mp4">
 	</video>
+<!--	<ul>-->
+<!--		--><?php //foreach ($data['upload_data'] as $key => $value); ?>
+<!--		<li>--><?php //echo $key; ?><!-- --><?php //echo $value; ?><!--</li>-->
+<!--	</ul>-->
+<!---->
+<!--	<p>--><?php //echo anchor('fileupload', 'Upload another file');?><!--</p>-->
 </div>
 </body>
 </html>

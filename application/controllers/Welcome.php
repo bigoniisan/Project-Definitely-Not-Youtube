@@ -10,7 +10,8 @@ class Welcome extends CI_Controller {
 		$this->load->model('main_model');
 		$this->load->helper(array(
 			'form',
-			'cookie'
+			'cookie',
+			'url'
 		));
 		$this->load->library(array(
 			'email',
@@ -43,7 +44,8 @@ class Welcome extends CI_Controller {
 		$this->load_header();
 		$this->load->view('upload', array(
 			'error' => '',
-			'file' => ''
+			'file' => '',
+			'data' => ''
 		));
 	}
 
@@ -89,26 +91,6 @@ class Welcome extends CI_Controller {
 			$this->load->view('templates/navbar_logged_out');
 		}
 	}
-
-//public function send_email() {
-//		$config = array(
-//			'protocol' => 'smtp',
-//			'smtp_host' => 'ssl://smtp.googlemail.com',
-//			'smpt_port' => '25',
-//			'smtp_user' => 'name@gmail.com',
-//			'smtp_pass' => 'password',
-//			'maintype' => 'html',
-//			'starttls' => true,
-//			'newline' => "\r\n"
-//		);
-//		$this->load->library('email', $config);
-//
-//		$this->email->from('misterimouto@gmail.com', 'MisterImouto');
-//		$this->email->to('johngod3@gmail.com');
-//		$this->email->subject('Web Information Systems Email Test');
-//		$this->email->message('Testing CodeIgniter Email functionality');
-//		$this->email->send();
-//}
 
 	public function show_calendar() {
 		$calendar_prefs = array(
@@ -299,12 +281,83 @@ class Welcome extends CI_Controller {
 			$upload_data = $this->upload->data();
 			$data = array(
 				'error' => '',
-				'file' => base_url().'/uploads/'.$upload_data['file_name']
+				'file' => base_url().'/uploads/'.$upload_data['file_name'],
+				'upload_data' => $this->upload->data()
 			);
 			$this->load_header();
-			$this->load->view('upload', $data);
+			$this->load->view('homepage', $data);
 		}
 	}
+
+	public function send_email() {
+		$config = Array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.gmail.com',
+			'smtp_port' => 465,
+			'smtp_user' => '94546302pp@gmail.com', // mail name
+			'smtp_pass' => 'asd123qwe!', // mail pass
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'wordwrap' => TRUE
+		);
+
+		/* Gmail settings */
+		$gmail_config = array(
+			'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+			'smtp_host' => 'ssl://smtp.gmail.com',
+			'smtpAUTH' => true,
+			'smtp_port' => 465,
+			'smtp_user' => 'ozsteals@gmail.com',
+			'smtp_pass' => 'INFS3202',
+			//'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+			'mailtype' => 'html', //plaintext 'text' mails or 'html'
+			'smtp_timeout' => '4', //in seconds
+			'charset' => 'iso-8859-1',
+			'wordwrap' => TRUE
+		);
+
+		$uq_config = array(
+			// UQ settings
+			'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+			'smtp_host' => 'mailhub.eait.uq.edu.au',
+			'smtpAUTH' => false,
+			'smtp_port' => 25,
+			'smtp_user' => '',
+			'smtp_pass' => '',
+			//'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+			'mailtype' => 'html', //plaintext 'text' mails or 'html'
+			//'smtp_timeout' => '4', //in seconds
+			'charset' => 'iso-8859-1',
+			'wordwrap' => TRUE
+		);
+
+		$this->load->library('email', $config);
+
+		$this->email->from('94546302pp@gmail.com', 'SupaSexy 69');
+//		$this->email->to('94546302pp@gmail.com');
+		$to_email = $this->input->post('send-email');
+		$this->email->to('misterimouto@gmail.com');
+		$this->email->subject('Email Test');
+		$this->email->message('Testing the email class.');
+
+		if($this->email->send()) {
+			$this->session->set_flashdata("email_sent","Congratulation Email Send Successfully.");
+		}
+		else {
+			$this->session->set_flashdata("email_sent","You have encountered an error");
+		}
+	}
+
+//	public function upload_multiple_videos() {
+//		if (isset($_POST['multi-file'])) {
+//			$filename = $_FILES['file']['name'];
+//			$temp = $_FILES['file']['temp_name'];
+//
+//			// move file from temporary location to uploads directory
+//			// and replacing temp. name with full name of file
+//			move_uploaded_file($temp, base_url()."./uploads/".$filename);
+//		}
+//	}
 
 	public function change_email() {
 		$this->load->model('main_model');
